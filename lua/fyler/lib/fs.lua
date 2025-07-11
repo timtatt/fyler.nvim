@@ -55,11 +55,7 @@ function M.relpath(path)
 end
 
 -- including to support nvim<0.11
-function _relpath(base, target, opts)
-  vim.validate("base", base, "string")
-  vim.validate("target", target, "string")
-  vim.validate("opts", opts, "table", true)
-
+function _relpath(base, target)
   base = vim.fs.normalize(vim.fs.abspath(base))
   target = vim.fs.normalize(vim.fs.abspath(target))
   if base == target then
