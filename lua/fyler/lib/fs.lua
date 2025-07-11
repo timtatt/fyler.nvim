@@ -50,7 +50,9 @@ function M.relpath(path)
   if vim.fs.relpath ~= nil then
     return vim.fs.relpath(M.getcwd(), path)
   else
-    return M.joinpath(M.getcwd(), path)
+    local x = M.joinpath(M.getcwd(), path)
+    print(x)
+    return x
   end
 end
 
