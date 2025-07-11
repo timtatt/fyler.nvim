@@ -50,10 +50,25 @@ function M.relpath(path)
   if vim.fs.relpath ~= nil then
     return vim.fs.relpath(M.getcwd(), path)
   else
-    local x = M.joinpath(M.getcwd(), path)
-    print(x)
-    return x
+    return _relpath(M.getcwd(), path)
   end
+end
+
+-- including to support nvim<0.11
+function _relpath(base, target, opts)
+  vim.validate("base", base, "string")
+  vim.validate("target", target, "string")
+  vim.validate("opts", opts, "table", true)
+
+  base = vim.fs.normalize(vim.fs.abspath(base))
+  target = vim.fs.normalize(vim.fs.abspath(target))
+  if base == target then
+    return "."
+  end
+
+  base = base .. (base ~= "/" and "/" or "")
+
+  return vim.startswith(target, base) and target:sub(#base + 1) or nil
 end
 
 ---@param path string
