@@ -47,7 +47,11 @@ end
 
 ---@param path string
 function M.relpath(path)
-  return vim.fs.relpath(M.getcwd(), path) or M.joinpath(M.getcwd(), path)
+  if vim.fs.relpath ~= nil then
+    return vim.fs.relpath(M.getcwd(), path)
+  else
+    return M.joinpath(M.getcwd(), path)
+  end
 end
 
 ---@param path string
